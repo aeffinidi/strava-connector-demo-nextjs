@@ -4,9 +4,9 @@ import { signOut, useSession } from "next-auth/react";
 const SignOut: FC = () => {
   const { data: session, status } = useSession();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signOut({ callbackUrl: process.env.HOST });
+    await signOut({ callbackUrl: process.env.HOST });
   };
 
   if (!session) {

@@ -1,13 +1,16 @@
 import { FormEvent } from "react";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import SignOut from "@/components/SignOut";
+import { authOptions } from "./api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 
 // import styles from "@/styles/Home.module.css";
 
 export default function Home() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const popupCenter = (url: string, title: string = "") => {
     const dualScreenLeft = window.screenLeft ?? window.screenX;
@@ -94,3 +97,12 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  console.log("authOptions:", authOptions.session);
+  return {
+    props: {
+      session: await getServerSession(req, res, authOptions),
+    },
+  };
+};
