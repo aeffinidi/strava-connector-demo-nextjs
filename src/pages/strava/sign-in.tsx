@@ -14,18 +14,7 @@ const StravaSignIn = () => {
     }
   }, [session, status]);
 
-  return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        position: "absolute",
-        left: 0,
-        top: 0,
-        background: "white",
-      }}
-    ></div>
-  );
+  return <div className="h-screen w-screen" />;
 };
 
 export default StravaSignIn;

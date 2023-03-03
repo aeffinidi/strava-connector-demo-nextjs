@@ -42,6 +42,14 @@ export default function Home() {
     popupCenter("/strava/sign-in");
   };
 
+  if (status === "loading") {
+    return (
+      <div className="container mx-auto flex flex-col h-screen justify-center items-center">
+        <h1 className="text-2xl">Loading...</h1>
+      </div>
+    );
+  }
+
   if (status === "authenticated") {
     return <SignOut />;
   }
