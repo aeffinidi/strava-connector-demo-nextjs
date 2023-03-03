@@ -1,8 +1,51 @@
+import { FormEvent } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import SignOut from "@/components/SignOut";
+import { useSession } from "next-auth/react";
+
 // import styles from "@/styles/Home.module.css";
 
 export default function Home() {
+  const { data: session, status } = useSession();
+
+  const popupCenter = (url: string, title: string = "") => {
+    const dualScreenLeft = window.screenLeft ?? window.screenX;
+    const dualScreenTop = window.screenTop ?? window.screenY;
+
+    const width =
+      window.innerWidth ?? document.documentElement.clientWidth ?? screen.width;
+
+    const height =
+      window.innerHeight ??
+      document.documentElement.clientHeight ??
+      screen.height;
+
+    const systemZoom = width / window.screen.availWidth;
+
+    const left = (width - 500) / 2 / systemZoom + dualScreenLeft;
+    const top = (height - 550) / 2 / systemZoom + dualScreenTop;
+
+    const newWindow = window.open(
+      url,
+      title,
+      `width=${500 / systemZoom},height=${
+        550 / systemZoom
+      },top=${top},left=${left}`
+    );
+
+    newWindow?.focus();
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    popupCenter("/strava/sign-in");
+  };
+
+  if (status === "authenticated") {
+    return <SignOut />;
+  }
+
   return (
     <>
       <Head>
@@ -24,12 +67,15 @@ export default function Home() {
               width={1500}
               height={1500}
             />
-            <form className="w-full md:w-2/3 flex flex-col items-center text-center">
+            <form
+              className="w-full md:w-2/3 flex flex-col items-center text-center"
+              onSubmit={handleSubmit}
+            >
               <h1 className="title-font sm:text-4xl text-3xl m-6 font-medium text-gray-900">
                 Unlock your digital 6 pack
               </h1>
               <div className="flex w-full justify-center items-end">
-                <button className="inline-flex text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                <button className="inline-flex text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 duration-300 rounded text-lg">
                   Connect now
                 </button>
               </div>
