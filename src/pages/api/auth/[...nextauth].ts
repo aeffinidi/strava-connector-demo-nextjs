@@ -17,6 +17,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    // TODO: invoke the step-function at this stage
     // signIn: async ({ user, account, profile, email }) => {
     //   return true;
     // },

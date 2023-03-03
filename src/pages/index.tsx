@@ -66,7 +66,10 @@ export default function Home() {
           content="Strava connector powered by next app"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="icon"
+          href="https://uploads-ssl.webflow.com/5f88601d99be1b43ff92001f/5f88601d99be1b1cac92013d_Favicon.png"
+        />
       </Head>
       <main>
         <section className="text-gray-600 body-font">
@@ -99,7 +102,6 @@ export default function Home() {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  console.log("authOptions:", authOptions.session);
   return {
     props: {
       session: await getServerSession(req, res, authOptions),
